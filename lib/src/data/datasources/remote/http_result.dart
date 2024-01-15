@@ -1,17 +1,22 @@
 class HttpResult<T> {
-  _HttpResultStatus status;
-  T? data;
-  String message;
+  final HttpResultStatus status;
+  final T? data;
+  final String message;
 
-  HttpResult.loading(this.message) : status = _HttpResultStatus.LOADING;
+  HttpResult.loading(this.message)
+      : status = HttpResultStatus.loading,
+        data = null;
   HttpResult.completed(this.data,
-      [this.status = _HttpResultStatus.COMPLETED, this.message = 'Success']);
+      [this.status = HttpResultStatus.completed, this.message = 'Success']);
   HttpResult.error([String? message])
-      : status = _HttpResultStatus.ERROR,
-        message = message ?? "";
+      : status = HttpResultStatus.error,
+        message = message ?? "",
+        data = null;
 
-  bool get hasError => status == _HttpResultStatus.ERROR && message.isNotEmpty;
-  bool get hasData => status == _HttpResultStatus.COMPLETED && data != null;
+  bool get isLoading => status == HttpResultStatus.loading;
+
+  bool get hasError => status == HttpResultStatus.error && message.isNotEmpty;
+  bool get hasData => status == HttpResultStatus.completed && data != null;
 
   bool get isNull => data == null;
 
@@ -36,4 +41,4 @@ class HttpResult<T> {
   }
 }
 
-enum _HttpResultStatus { LOADING, COMPLETED, ERROR }
+enum HttpResultStatus { loading, completed, error }

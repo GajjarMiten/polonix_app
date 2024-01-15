@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:poloniexapp/src/core/logger/logger.dart';
 import 'package:poloniexapp/src/presentation/core/enums/routes_enum.dart';
+import 'package:poloniexapp/src/presentation/core/globals.dart';
 import 'package:poloniexapp/src/presentation/core/types.dart';
 import 'package:poloniexapp/src/presentation/flow/auth_flow/login/login_screen.dart';
 import 'package:poloniexapp/src/presentation/flow/auth_flow/registration/registration_screen.dart';
@@ -20,7 +21,7 @@ class AppRouter {
     if (AppRouter._instance != null) return AppRouter._instance!;
 
     final router = GoRouter(
-      initialLocation: Routes.splash.path,
+      initialLocation: Routes.registrationScreen.path,
       routes: _routeBuilder(),
     );
 
@@ -53,6 +54,7 @@ class AppRouter {
             path: route.path,
             name: route.name,
             builder: (context, state) {
+              mainContext = context;
               return _getPage(route, context, state);
             },
           ),

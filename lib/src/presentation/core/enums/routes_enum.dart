@@ -14,6 +14,11 @@ enum Routes {
     path: '/loginScreen',
     analyticsName: 'login screen',
   ),
+  homeScreen(
+    name: 'home',
+    path: '/homeScreen',
+    analyticsName: 'home screen',
+  ),
   other(
     name: 'other',
     path: '/other',

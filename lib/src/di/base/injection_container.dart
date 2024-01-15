@@ -1,6 +1,13 @@
 import 'dart:async';
 
 import 'package:get_it/get_it.dart';
+import 'package:poloniexapp/src/data/datasources/local/base/base_local_datasource.dart';
+import 'package:poloniexapp/src/data/datasources/local/hive_datasource.dart';
+import 'package:poloniexapp/src/data/datasources/local/user_datasource/user_datasource.dart';
+import 'package:poloniexapp/src/data/repositories/authentication_repository.dart';
+import 'package:poloniexapp/src/domain/repositories/authentication_repository.dart';
+import 'package:poloniexapp/src/domain/usecases/auth_usecases/login_user_usecase.dart';
+import 'package:poloniexapp/src/domain/usecases/auth_usecases/register_user_usecase.dart';
 import 'package:poloniexapp/src/startup/startup.dart';
 
 part "../injection_container_impl.dart";

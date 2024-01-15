@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poloniexapp/src/core/logger/logger.dart';
+import 'package:poloniexapp/src/di/base/injection_container.dart';
+import 'package:poloniexapp/src/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:poloniexapp/src/presentation/routing/app_router.dart';
 import 'package:poloniexapp/src/presentation/shared/sizer.dart';
 import 'package:poloniexapp/src/startup/startup.dart';
@@ -18,7 +20,7 @@ class AppRunnerTask extends LaunchTask {
     console('Running AppRunnerTask');
     WidgetsFlutterBinding.ensureInitialized();
 
-    const app = ApplicationWidget();
+    final app = ApplicationWidget();
 
     Bloc.observer = ApplicationBlocObserver();
     runApp(app);
@@ -30,16 +32,37 @@ class AppRunnerTask extends LaunchTask {
   Future<void> dispose() async {}
 }
 
-class ApplicationWidget extends StatefulWidget {
-  const ApplicationWidget({
+class ApplicationWidget extends StatelessWidget {
+  ApplicationWidget({
     super.key,
   });
 
+  final getIt = InjectionContainer.instance;
+
   @override
-  State<ApplicationWidget> createState() => _ApplicationWidgetState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(
+            loginUserUseCase: getIt(),
+            registerUserUseCase: getIt(),
+          ),
+        ),
+      ],
+      child: const App(),
+    );
+  }
 }
 
-class _ApplicationWidgetState extends State<ApplicationWidget> {
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   late final GoRouter routerConfig;
 
   @override

@@ -3,12 +3,12 @@ import 'package:poloniexapp/src/domain/entities/failure.dart';
 import 'package:poloniexapp/src/domain/entities/user.dart';
 import 'package:poloniexapp/src/domain/repositories/authentication_repository.dart';
 
-class LoginUserUsecase {
+class LoginUserUseCase {
   final AuthenticationRepository repository;
 
-  LoginUserUsecase(this.repository);
+  LoginUserUseCase(this.repository);
 
-  Future<Either<Failure, User>> call(User params) async {
-    return await repository.loginUser(params);
+  Future<Either<Failure, User>> call(String email, String password) async {
+    return await repository.loginUser(email, password);
   }
 }

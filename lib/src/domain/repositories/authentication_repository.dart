@@ -5,5 +5,5 @@ import 'package:poloniexapp/src/domain/entities/user.dart';
 abstract class AuthenticationRepository {
   Future<Either<Failure, User>> registerUser(User user);
 
-  Future<Either<Failure, User>> loginUser(User user);
+  Future<Either<Failure, User>> loginUser(String email, String password);
 }

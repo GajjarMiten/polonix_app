@@ -2,6 +2,23 @@ part of 'base/injection_container.dart';
 
 Future<void> init(InjectionContainer getIt, LaunchContext launchContext) async {
   getIt.registerSingleton(AppLauncher(context: launchContext));
+
+  getIt.registerSingletonAsync<BaseLocalDataSource>(
+      () => HiveDataSource.initHive());
+
+  getIt.registerSingletonAsync<LocalUserDataSource>(
+      () async => LocalUserDataSource(await getIt.getAsync()));
+
+  getIt.registerSingletonAsync<AuthenticationRepository>(
+      () async => LocalAuthenticationRepoImpl(await getIt.getAsync()));
+
+  getIt.registerSingletonAsync<LoginUserUseCase>(
+    () async => LoginUserUseCase(await getIt.getAsync()),
+  );
+  getIt.registerSingletonAsync<RegisterUserUseCase>(
+    () async => RegisterUserUseCase(await getIt.getAsync()),
+  );
+
   await getIt.readyAsync();
 }
 

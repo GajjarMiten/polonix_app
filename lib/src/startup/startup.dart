@@ -7,10 +7,9 @@ Future<void> runPolonixApp() async {
   await AppRunner.run();
 }
 
-final getIt = di.InjectionContainer.instance;
-
 class AppRunner {
   static Future<void> run() async {
+    final getIt = di.InjectionContainer.instance;
     final LaunchContext launchContext = LaunchContext(getIt);
     await di.init(getIt, launchContext);
 
